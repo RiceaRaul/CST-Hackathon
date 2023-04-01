@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Interfaces;
+using Common.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models.Authentification;
@@ -22,6 +23,15 @@ namespace Asp_NET_Core_6_Template.Controllers
             var response = await _authentificationService.Authentificate(request);
 
             return Ok(response);
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("Authentification/GetUser")]
+        public ActionResult GetUser()
+        {
+            var response = HttpContext.GetUser();
+            return Ok( new { username = response});
         }
 
         [HttpPost]
