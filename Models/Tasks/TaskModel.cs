@@ -1,6 +1,6 @@
 ﻿namespace Models.Tasks
 {
-    public class Task
+    public class TaskModel
     {
         public int Id { get; set; } = default!;
         public string Name { get; set; } = default!; 

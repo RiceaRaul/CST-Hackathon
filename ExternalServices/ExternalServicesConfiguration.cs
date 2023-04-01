@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using ExternalServices.Implementations;
+using ExternalServices.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ExternalServices
 {
@@ -6,7 +8,7 @@ namespace ExternalServices
     {
         public static void RegisterDepedencies(IServiceCollection services)
         {
-           // services.AddSingleton<IUnitOfWork, UnitOfWork>();
+            services.AddSingleton<IJdoodleClient, JdoodleClient>();
         }
     }
 }

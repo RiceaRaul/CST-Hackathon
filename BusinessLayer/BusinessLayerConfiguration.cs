@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Implementation;
 using BusinessLayer.Interfaces;
 using DataAccessLayer;
+using ExternalServices;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BusinessLayer
@@ -12,7 +13,11 @@ namespace BusinessLayer
 
             services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<IAuthentificationService, AuthentificationService>();
+            services.AddScoped<IJdoodleService, JdoodleService>();
+            services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<ITaskService, TaskService>();
             DataAccessLayerConfiguration.RegisterDepedencies(services);
+            ExternalServicesConfiguration.RegisterDepedencies(services);
         }
     }
 }

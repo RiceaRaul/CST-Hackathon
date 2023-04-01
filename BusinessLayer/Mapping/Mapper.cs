@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using DataAccessLayer.Models;
 using Models.Authentification;
+using Models.Jdoodle;
+using Models.Projects;
+using Models.Tasks;
 
 namespace BusinessLayer.Mapping
 {
@@ -9,7 +12,14 @@ namespace BusinessLayer.Mapping
         public Mapper()
         {
             CreateMap<User, UserDto>()
+                .ReverseMap();  
+            CreateMap<JdoodleRequest, JdoodleRequestSend>()
                 .ReverseMap();
+            CreateMap<Project, ProjectDto>()
+                .ReverseMap();
+
+            CreateMap<TaskModel, TaskDto>()
+               .ReverseMap();
         }
     }
 }

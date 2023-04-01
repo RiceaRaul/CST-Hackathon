@@ -38,7 +38,7 @@ namespace Common.Extensions
 
         public static string GetUser(this HubCallerContext context)
         {
-            return context.GetHttpContext().GetUser();
+            return context!.GetHttpContext()!.GetUser();
         }
     }
 }

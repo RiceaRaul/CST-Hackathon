@@ -12,10 +12,12 @@ namespace DataAccessLayer
     public class UnitOfWork : IDisposable, IUnitOfWork
     {
         private IDbConnection? _connection;
-        private IDbTransaction? _transaction;
+        private IDbTransaction _transaction;
         private bool _disposed;
 
-        private IUserRepository _userRepository;
+        private IUserRepository? _userRepository;
+        private IProjectRepository? _projectRepository;
+        private ITaskRepository? _taskRepository;
         public UnitOfWork(IOptions<AppSettings> appSettings)
         {
             InitCustomColumn();
@@ -28,11 +30,23 @@ namespace DataAccessLayer
         private void InitCustomColumn()
         {
             Dapper.SqlMapper.SetTypeMap(typeof(UserDto), new ColumnAttributeTypeMapper<UserDto>());
+            Dapper.SqlMapper.SetTypeMap(typeof(ProjectDto), new ColumnAttributeTypeMapper<ProjectDto>());
+            Dapper.SqlMapper.SetTypeMap(typeof(TaskDto), new ColumnAttributeTypeMapper<TaskDto>());
         }
 
         public IUserRepository UserRepository
         {
             get { return _userRepository ?? (_userRepository = new UserRepository(_transaction)); }
+        }
+
+        public IProjectRepository ProjectRepository
+        {
+            get { return _projectRepository ?? (_projectRepository = new ProjectRepository(_transaction)); }
+        }
+
+        public ITaskRepository TaskRepository
+        {
+            get { return _taskRepository ?? (_taskRepository = new TaskRepository(_transaction)); }
         }
 
         public void Dispose()
@@ -44,6 +58,8 @@ namespace DataAccessLayer
         private void resetRepositories()
         {
             _userRepository = null;
+            _projectRepository = null;
+            _taskRepository = null;
         }
 
         public void Commit()
@@ -74,7 +90,7 @@ namespace DataAccessLayer
                     if (_transaction != null)
                     {
                         _transaction.Dispose();
-                        _transaction = null;
+                        _transaction = null!;
                     }
                     if (_connection != null)
                     {

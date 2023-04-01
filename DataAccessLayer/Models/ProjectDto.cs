@@ -6,10 +6,13 @@ namespace DataAccessLayer.Models
     {
         [Column("id")]
         public int Id { get; set; } = default!;
+
         [Column("name")]
-        public int Name { get; set; } = default!;
+        public string Name { get; set; } = default!;
+
         [Column("description")]
-        public int Description { get; set; } = default!;
+        public string Description { get; set; } = default!;
+
         [Column("author")]
         public int Author { get; set; } = default!;
     }
