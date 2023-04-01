@@ -11,6 +11,7 @@ namespace DataAccessLayer.Repositories
 
         private const string CREATE_USER = "users_Create";
         private const string LOGIN_USER = "users_LoginUser";
+        private const string GET_BY_USERNAME = "users_getByUsername";
 
         public UserRepository(IDbTransaction transaction) : base(transaction)
         {
@@ -52,6 +53,24 @@ namespace DataAccessLayer.Repositories
             );
 
             return result;
+        }
+
+        public async Task<UserDto> GetUserDetails(string  username)
+        {
+            var parameters = new DynamicParameters(new
+            {
+                username = username,
+            });
+
+            var result = await Connection.QueryAsync<UserDto>(
+                sql: GET_BY_USERNAME,
+                param: parameters,
+                commandType: CommandType.StoredProcedure,
+                transaction: Transaction,
+                commandTimeout: 20
+            );
+
+            return result.First();
         }
     }
 }

@@ -7,5 +7,6 @@ namespace BusinessLayer.Interfaces
     {
         Task<AuthentificationResponse?> Authentificate(AuthentificationRequest request);
         Task<User> CreateUser(RegisterRequest request);
+        Task<User> GetUserDetails(string username);
     }
 }

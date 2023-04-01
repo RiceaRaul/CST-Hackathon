@@ -3,6 +3,7 @@ using DataAccessLayer.Models;
 using Models.Authentification;
 using Models.Jdoodle;
 using Models.Projects;
+using Models.Rooms;
 using Models.Tasks;
 
 namespace BusinessLayer.Mapping
@@ -20,6 +21,8 @@ namespace BusinessLayer.Mapping
 
             CreateMap<TaskModel, TaskDto>()
                .ReverseMap();
+            CreateMap<Room, RoomDto>()
+             .ReverseMap();
         }
     }
 }

@@ -11,6 +11,7 @@ namespace DataAccessLayer.Repositories
 
         private const string CREATE_PROJECTS = "projects_CreateProjects";
         private const string GET_BY_USERNAME = "projects_GetByUser";
+        private const string GET_BY_ID = "project_GetById";
         public ProjectRepository(IDbTransaction transaction) : base(transaction)
         {
         }
@@ -42,6 +43,22 @@ namespace DataAccessLayer.Repositories
             });
             var result = await Connection.QueryAsync<ProjectDto>(
                 sql: GET_BY_USERNAME,
+                param: parameters,
+                commandType: CommandType.StoredProcedure,
+                transaction: Transaction,
+                commandTimeout: 20
+            );
+
+            return result;
+        }
+        public async Task<IEnumerable<ProjectDto>> GetById(int id)
+        {
+            var parameters = new DynamicParameters(new
+            {
+                id = id,
+            });
+            var result = await Connection.QueryAsync<ProjectDto>(
+                sql: GET_BY_ID,
                 param: parameters,
                 commandType: CommandType.StoredProcedure,
                 transaction: Transaction,

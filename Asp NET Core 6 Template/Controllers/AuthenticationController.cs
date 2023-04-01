@@ -32,7 +32,19 @@ namespace Asp_NET_Core_6_Template.Controllers
         {
             var response = HttpContext.GetUser();
             return Ok( new { username = response});
+        }   
+        
+        [HttpGet]
+        [Authorize]
+        [Route("Authentification/GetUserDetails")]
+        public async Task<ActionResult<User>> GetUserDetails()
+        {
+            var user = HttpContext.GetUser();
+            var response = await _authentificationService.GetUserDetails(user);
+
+            return response;
         }
+
 
         [HttpPost]
         [AllowAnonymous]

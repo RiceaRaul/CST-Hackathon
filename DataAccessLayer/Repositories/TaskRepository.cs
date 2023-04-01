@@ -1,8 +1,6 @@
 ﻿using Dapper;
 using DataAccessLayer.Interfaces;
 using DataAccessLayer.Models;
-using Models.Authentification;
-using Models.Projects;
 using Models.Tasks;
 using System.Data;
 
@@ -11,6 +9,7 @@ namespace DataAccessLayer.Repositories
     public class TaskRepository : RepositoryBase, ITaskRepository
     {
         private readonly string CREATE_TASK = "projects_CreateTask";
+        private readonly string GET_BY_PROJECT = "tasks_GetByProject";
         public TaskRepository(IDbTransaction transaction) : base(transaction)
         {
         }
@@ -36,6 +35,22 @@ namespace DataAccessLayer.Repositories
             );
 
             return result.First();
+        }
+        public async Task<IEnumerable<TaskDto>> GetByProject(int project)
+        {
+            var parameters = new DynamicParameters(new
+            {
+                project = project,
+            });
+            var result = await Connection.QueryAsync<TaskDto>(
+                sql: GET_BY_PROJECT,
+                param: parameters,
+                commandType: CommandType.StoredProcedure,
+                transaction: Transaction,
+                commandTimeout: 20
+            );
+
+            return result;
         }
 
     }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BusinessLayer.Interfaces;
 using DataAccessLayer;
+using DataAccessLayer.Models;
 using Models.ErrorHandling;
 using Models.Tasks;
 using System.Data.SqlClient;
@@ -25,6 +26,27 @@ namespace BusinessLayer.Implementation
                 var result = await _unitOfWork.TaskRepository.CreateTask(request);
                 var resultMapped = _mapper.Map<TaskModel>(result);
 
+                _unitOfWork.Commit();
+                return resultMapped;
+            }
+            catch (SqlException ex)
+            {
+                if (ex.Number == 500001)
+                {
+                    throw new ApiErrorException(ex.Message, HttpStatusCode.BadRequest);
+                }
+                else
+                {
+                    throw new ApiErrorException(ex.Message);
+                }
+            }
+        }
+        public async Task<IEnumerable<TaskModel>> GetByProject(int project)
+        {
+            try
+            {
+                var result = await _unitOfWork.TaskRepository.GetByProject(project);
+                var resultMapped = _mapper.Map<IEnumerable<TaskModel>>(result);
                 _unitOfWork.Commit();
                 return resultMapped;
             }

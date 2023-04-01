@@ -6,5 +6,6 @@ namespace BusinessLayer.Interfaces
     {
         Task<Project> CreateProject(CreateProjectRequest request);
         Task<IEnumerable<Project>> GetByUser(string username);
+        Task<IEnumerable<Project>> GetById(int id);
     }
 }

@@ -18,11 +18,12 @@ namespace DataAccessLayer
         private IUserRepository? _userRepository;
         private IProjectRepository? _projectRepository;
         private ITaskRepository? _taskRepository;
+        private IRoomRepository? _roomRepository;
         public UnitOfWork(IOptions<AppSettings> appSettings)
         {
             InitCustomColumn();
 
-            _connection = new SqlConnection("Data Source=91.92.136.222;Initial Catalog=CST;User ID=sa;Password=Relisys123;");
+            _connection = new SqlConnection("Data Source=91.92.136.222;Initial Catalog=CST;User ID=sa;Password=Relisys123;MultipleActiveResultSets=True");
             _connection.Open();
             _transaction = _connection.BeginTransaction(); 
         }
@@ -47,6 +48,10 @@ namespace DataAccessLayer
         public ITaskRepository TaskRepository
         {
             get { return _taskRepository ?? (_taskRepository = new TaskRepository(_transaction)); }
+        }   
+        public IRoomRepository RoomRepository
+        {
+            get { return _roomRepository ?? (_roomRepository = new RoomRepository(_transaction)); }
         }
 
         public void Dispose()
@@ -60,10 +65,12 @@ namespace DataAccessLayer
             _userRepository = null;
             _projectRepository = null;
             _taskRepository = null;
+            _roomRepository = null;
         }
 
         public void Commit()
         {
+            resetRepositories();
             try
             {
                 _transaction!.Commit();
@@ -76,8 +83,7 @@ namespace DataAccessLayer
             finally
             {
                 _transaction!.Dispose();
-                _transaction = _connection!.BeginTransaction();
-                resetRepositories();
+                _transaction = _connection!.BeginTransaction();           
             }
         }
 

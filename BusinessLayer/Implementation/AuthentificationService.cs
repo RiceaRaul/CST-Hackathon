@@ -27,6 +27,7 @@ namespace BusinessLayer.Implementation
             try
             {
                 var userValidate = await _unitOfWork.UserRepository.LoginUser(request);
+                _unitOfWork.Commit();
 
                 var claim = CreateClaim(request);
                 if (claim == null)
@@ -35,6 +36,29 @@ namespace BusinessLayer.Implementation
                 }
 
                 return _jwtService.CreateJwt(claim);
+            }
+            catch(SqlException ex) {
+                if(ex.Number == 500001)
+                {
+                    throw new ApiErrorException(ex.Message, HttpStatusCode.NotFound);
+                }
+                else
+                {
+                    throw new ApiErrorException(ex.Message, HttpStatusCode.BadRequest);
+                }
+              
+            }
+        } 
+        
+        public async Task<User> GetUserDetails(string username)
+        {
+            try
+            {
+                var userValidate = await _unitOfWork.UserRepository.GetUserDetails(username);
+                _unitOfWork.Commit();
+                var user = _mapper.Map<User>(userValidate);
+
+                return user;
             }
             catch(SqlException ex) {
                 if(ex.Number == 500001)

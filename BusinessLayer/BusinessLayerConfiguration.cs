@@ -16,6 +16,7 @@ namespace BusinessLayer
             services.AddScoped<IJdoodleService, JdoodleService>();
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<ITaskService, TaskService>();
+            services.AddScoped<IRoomService, RoomService>();
             DataAccessLayerConfiguration.RegisterDepedencies(services);
             ExternalServicesConfiguration.RegisterDepedencies(services);
         }

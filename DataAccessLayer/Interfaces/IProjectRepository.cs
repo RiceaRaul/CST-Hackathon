@@ -7,5 +7,6 @@ namespace DataAccessLayer.Interfaces
     {
         Task<ProjectDto> CreateProject(CreateProjectRequest request);
         Task<IEnumerable<ProjectDto>> GetByUser(string username);
+        Task<IEnumerable<ProjectDto>> GetById(int id);
     }
 }
