@@ -17,9 +17,19 @@ namespace Asp_NET_Core_6_Template.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("Authentification/Auth")]
-        public ActionResult<AuthentificationResponse> Auth([FromBody] AuthentificationRequest request)
+        public async Task<ActionResult<AuthentificationResponse>> Auth([FromBody] AuthentificationRequest request)
         {
-            var response = _authentificationService.Authentificate(request);
+            var response = await _authentificationService.Authentificate(request);
+
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("Authentification/CreateUser")]
+        public async Task<ActionResult<User>> CreateUser([FromBody] RegisterRequest request)
+        {
+            var response = await _authentificationService.CreateUser(request);
 
             return Ok(response);
         }

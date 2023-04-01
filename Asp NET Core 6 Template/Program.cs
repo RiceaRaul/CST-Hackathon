@@ -1,6 +1,7 @@
 using Asp_NET_Core_6_Template.Extensions;
 using Asp_NET_Core_6_Template.Middlewares;
 using BusinessLayer;
+using BusinessLayer.Mapping;
 using Common.Extensions;
 using Common.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -83,6 +84,8 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddAutoMapper(typeof(Mapper));
+
 BusinessLayerConfiguration.RegisterDepedencies(builder.Services);
 
 builder.Services.AddSignalR( hubOptions =>
@@ -105,6 +108,8 @@ if (app.Environment.IsDevelopment())
 app.UseCors("CorsPolicy");
 
 app.UseJwtMiddleware();
+
+app.UseErrorHandlingMiddleware();
 
 app.UseHttpsRedirection();
 

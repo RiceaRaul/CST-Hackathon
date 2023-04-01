@@ -1,9 +1,11 @@
-﻿using Models.Authentification;
+﻿using DataAccessLayer.Models;
+using Models.Authentification;
 
 namespace BusinessLayer.Interfaces
 {
     public interface IAuthentificationService
     {
-        AuthentificationResponse? Authentificate(AuthentificationRequest request);
+        Task<AuthentificationResponse?> Authentificate(AuthentificationRequest request);
+        Task<User> CreateUser(RegisterRequest request);
     }
 }

@@ -9,6 +9,7 @@ namespace BusinessLayer
     {
         public static void RegisterDepedencies(IServiceCollection services)
         {
+
             services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<IAuthentificationService, AuthentificationService>();
             DataAccessLayerConfiguration.RegisterDepedencies(services);
