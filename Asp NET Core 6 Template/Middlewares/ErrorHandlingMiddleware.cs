@@ -58,4 +58,11 @@ namespace Asp_NET_Core_6_Template.Middlewares
             return context.Response.WriteAsync(result);
         }
     }
+    public static class ErrorHandlingMiddlewareExtension
+    {
+        public static IApplicationBuilder UseErrorHandlingMiddleware(this IApplicationBuilder builder)
+        {
+            return builder.UseMiddleware<ErrorHandlingMiddleware>();
+        }
+    }
 }
