@@ -55,10 +55,52 @@ namespace BusinessLayer.Implementation
             try
             {
                 var userValidate = await _unitOfWork.UserRepository.GetUserDetails(username);
-                _unitOfWork.Commit();
                 var user = _mapper.Map<User>(userValidate);
 
                 return user;
+            }
+            catch(SqlException ex) {
+                if(ex.Number == 500001)
+                {
+                    throw new ApiErrorException(ex.Message, HttpStatusCode.NotFound);
+                }
+                else
+                {
+                    throw new ApiErrorException(ex.Message, HttpStatusCode.BadRequest);
+                }
+              
+            }
+        } 
+        
+        public async Task<IEnumerable<User>> GetLeaderBoard()
+        {
+            try
+            {
+                var userValidate = await _unitOfWork.UserRepository.GetLeaderBoard();
+                var user = _mapper.Map<IEnumerable<User>>(userValidate);
+
+                return user;
+            }
+            catch(SqlException ex) {
+                if(ex.Number == 500001)
+                {
+                    throw new ApiErrorException(ex.Message, HttpStatusCode.NotFound);
+                }
+                else
+                {
+                    throw new ApiErrorException(ex.Message, HttpStatusCode.BadRequest);
+                }
+              
+            }
+        }
+        public async Task<bool> UpdateExp(UpdateExpRequest request)
+        {
+            try
+            {
+                var update = await _unitOfWork.UserRepository.UpdateExp(request);
+                _unitOfWork.Commit();
+
+                return update;
             }
             catch(SqlException ex) {
                 if(ex.Number == 500001)

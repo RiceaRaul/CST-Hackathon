@@ -8,5 +8,7 @@ namespace BusinessLayer.Interfaces
         Task<AuthentificationResponse?> Authentificate(AuthentificationRequest request);
         Task<User> CreateUser(RegisterRequest request);
         Task<User> GetUserDetails(string username);
+        Task<IEnumerable<User>> GetLeaderBoard();
+        Task<bool> UpdateExp(UpdateExpRequest request);
     }
 }

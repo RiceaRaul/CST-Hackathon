@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BusinessLayer.Interfaces;
 using DataAccessLayer;
+using DataAccessLayer.Models;
 using Models.Rooms;
 
 namespace BusinessLayer.Implementation
@@ -19,6 +20,21 @@ namespace BusinessLayer.Implementation
         {
             var resultDto = await _unitOfWork.RoomRepository.GenerateRoom();
             var result = _mapper.Map<Room>(resultDto);
+
+            return result;
+        }
+
+        public async Task<Room> GetRoomByCode(string roomcode)
+        {
+            var resultDto = await _unitOfWork.RoomRepository.GetRoomByCode(roomcode);
+
+            var result = _mapper.Map<Room>(resultDto);
+
+            return result;
+        }  
+        public async Task<bool> CloseRoom(string roomcode)
+        {
+            var result = await _unitOfWork.RoomRepository.CloseRoom(roomcode);
 
             return result;
         }

@@ -17,10 +17,30 @@ namespace Asp_NET_Core_6_Template.Controllers
 
         [HttpPost]
         [Authorize]
-        [Route("/room/createroom")]
+        [Route("/Room/createroom")]
         public async Task<ActionResult<Room>> CreateRoom()
         {
             var result = await _roomService.GenerateRoom();
+
+            return Ok(result);
+        } 
+        
+        [HttpGet]
+        [Authorize]
+        [Route("/Room/getRoom/{code}")]
+        public async Task<ActionResult<Room>> CreateRoom(string code)
+        {
+            var result = await _roomService.GetRoomByCode(code);
+
+            return Ok(result);
+        }  
+        
+        [HttpPatch]
+        [Authorize]
+        [Route("/Room/CloseRoom/{code}")]
+        public async Task<ActionResult<bool>> CloseRoom(string code)
+        {
+            var result = await _roomService.CloseRoom(code);
 
             return Ok(result);
         }

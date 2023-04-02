@@ -12,11 +12,16 @@ namespace Asp_NET_Core_6_Template.Hubs.Implementation
         {
             await Clients.All.SendAsync("receive", "salut " + Context.GetUser());
         }*/
-        public async Task send(string roomName)
+        public async Task JoinGroup(string roomName)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, roomName);
-            await Clients.Group(roomName).SendAsync("receive", Context.GetUser() + " joined.");
-          
+            await Clients.Group(roomName).SendAsync("receiveMessage", new { author = Context.GetUser(), message = Context.GetUser() + " joined." });
         }
+
+        public async Task SendMessage(string roomName,string message)
+        {
+            await Clients.Group(roomName).SendAsync("receiveMessage", new { author = Context.GetUser(), message = message });
+        }
+
     }
 }

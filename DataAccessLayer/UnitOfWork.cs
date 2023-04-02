@@ -73,17 +73,17 @@ namespace DataAccessLayer
             resetRepositories();
             try
             {
-                _transaction!.Commit();
+                _transaction.Commit();
             }
             catch
             {
-                _transaction!.Rollback();
+                _transaction.Rollback();
                 throw;
             }
             finally
             {
-                _transaction!.Dispose();
-                _transaction = _connection!.BeginTransaction();           
+                _transaction.Dispose();
+                _transaction = _connection.BeginTransaction();           
             }
         }
 

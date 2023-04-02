@@ -42,7 +42,18 @@ namespace Asp_NET_Core_6_Template.Controllers
             var user = HttpContext.GetUser();
             var response = await _authentificationService.GetUserDetails(user);
 
-            return response;
+            return Ok(response);
+        }    
+        
+        [HttpGet]
+        [Authorize]
+        [Route("Authentification/GetLeaderBoard")]
+        public async Task<ActionResult<IEnumerable<User>>> GetLeaderBoard()
+        {
+            var user = HttpContext.GetUser();
+            var response = await _authentificationService.GetLeaderBoard();
+
+            return Ok(response);
         }
 
 
@@ -52,6 +63,17 @@ namespace Asp_NET_Core_6_Template.Controllers
         public async Task<ActionResult<User>> CreateUser([FromBody] RegisterRequest request)
         {
             var response = await _authentificationService.CreateUser(request);
+
+            return Ok(response);
+        }
+        
+        [HttpPost]
+        [Authorize]
+        [Route("Authentification/UpdateExp")]
+        public async Task<ActionResult<bool>> UpdateExp([FromBody] UpdateExpRequest  request)
+        {
+            request.user = HttpContext.GetUser();
+            var response = await _authentificationService.UpdateExp(request);
 
             return Ok(response);
         }

@@ -6,7 +6,7 @@ namespace DataAccessLayer
     {
         public static void RegisterDepedencies(IServiceCollection services)
         {
-            services.AddSingleton<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
     }
 }

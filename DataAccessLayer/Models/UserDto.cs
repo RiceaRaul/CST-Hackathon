@@ -8,8 +8,6 @@ namespace DataAccessLayer.Models
         public int Id { get; set; } = default!;
         [Column("username")]
         public string Username { get;set; } = default!;
-        [Column("password")]
-        public string Password { get; set; } = default!;
         [Column("level")]
         public string Level { get; set; } = default!;
         [Column("exp")]
