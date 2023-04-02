@@ -22,9 +22,9 @@ namespace Common.Extensions
                     var path = context.HttpContext.Request.Path;
                     if(!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments(HUBS))
                     {
-                        var tokenHandler = new JwtSecurityTokenHandler();
 
-                        var token = tokenHandler.ReadJwtToken(accessToken);
+                        var tokenHandler = new JwtSecurityTokenHandler();                    
+                        var token = tokenHandler.ReadJwtToken(accessToken.ToString().Replace("Bearer ",""));
                         var jwtToken = token as JwtSecurityToken;
                         var username = jwtToken.Claims.First(x=> x.Type == ClaimTypes.Name).Value;
 

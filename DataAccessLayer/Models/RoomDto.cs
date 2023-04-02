@@ -9,6 +9,6 @@ namespace DataAccessLayer.Models
         [Column("roomcode")]
         public string RoomCode { get; set; } = default!;
         [Column("status")]
-        private int status { get; set; } = default;
+        public int Status { get; set; } = default;
     }
 }

@@ -6,6 +6,6 @@ namespace Models.Rooms
     {
         public int Id { get; set; } = default;
         public string RoomCode { get; set; } = default!;
-        private int status { get; set; } = default;
+        public int Status { get; set; } = default;
     }
 }

@@ -6,7 +6,7 @@ namespace Asp_NET_Core_6_Template.Extensions
     {
         public static void RegisterHubs(this WebApplication app)
         {
-            app.MapHub<TestHub>("hub/testhub");
+            app.MapHub<RoomHub>("hub/RoomHub");
         }
     }
 }
