@@ -20,7 +20,7 @@ namespace BusinessLayer.Implementation
         {
             var resultDto = await _unitOfWork.RoomRepository.GenerateRoom();
             var result = _mapper.Map<Room>(resultDto);
-
+            _unitOfWork.Commit();
             return result;
         }
 
@@ -29,7 +29,7 @@ namespace BusinessLayer.Implementation
             var resultDto = await _unitOfWork.RoomRepository.GetRoomByCode(roomcode);
 
             var result = _mapper.Map<Room>(resultDto);
-
+            
             return result;
         }  
         public async Task<bool> CloseRoom(string roomcode)
